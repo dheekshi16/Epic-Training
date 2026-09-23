@@ -1,0 +1,61 @@
+import java.util.*;
+class ClassA {
+	int a = 10;
+	void display(int a,int b) {
+		System.out.println("ClassA");
+	}
+}
+
+class ClassB extends ClassA {
+	int b = 20;
+	void display(int a) {
+		System.out.println("ClassB");
+	}
+}
+
+class ClassC extends ClassA {
+	int c = 30;
+	void display(int a, int b,int c) {
+		System.out.println("ClassC");
+	}
+}
+
+class ClassD extends ClassB {
+	int d = 40;
+}
+
+class ClassE extends ClassB {
+	int e = 50;
+}
+
+class ClassF extends ClassC {
+	int f = 60;
+}
+class ClassG extends ClassE {
+	int g = 70;
+}
+
+public class Main
+{
+	public static void main(String[] args) {
+		System.out.println("Object of class D");
+		ClassD dobj = new ClassD();
+		System.out.println("class A: "+dobj.a);
+		System.out.println("class B: "+dobj.b);
+		System.out.println("class D: "+dobj.d);
+		System.out.println();
+		System.out.println("Object of class F");
+		ClassF fobj = new ClassF();
+		System.out.println("class A: "+fobj.a);
+		System.out.println("class C: "+fobj.c);
+		System.out.println("class F: "+fobj.f);
+		System.out.println();
+        System.out.println("Object of class G");
+		ClassG gobj = new ClassG();
+		System.out.println("class A: "+gobj.a);
+		System.out.println("class B: "+gobj.b);
+		System.out.println("class E: "+gobj.e);
+		System.out.println("class G: "+gobj.g);
+		System.out.println();
+	}
+}
