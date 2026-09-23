@@ -1,0 +1,126 @@
+import java.util.*;
+class Customer{
+    String cusname;
+    String cusemail;
+    
+    Customer(String name,String email){
+        this.cusname=name;
+        this.cusemail=email;
+    }
+    
+    void createcustomer(){
+        Scanner sc=new Scanner(System.in);
+        System.out.println("enter the cusname");
+        String name=sc.nextLine();
+        System.out.println("enter the cusemail");
+        String email=sc.nextLine();
+        Customer cus=new Customer(name,email);
+    }
+}
+class Node{
+    Customer Data;
+    Node Address;
+    Node head=null,prev=null,tail=null;
+    Node(int D,Node A){
+        this.Data=D;
+        this.Address=A;
+    }
+    Node(){
+ 
+    }
+
+void CreateData(){
+    Scanner sc=new Scanner(System.in);
+    System.out.println("enter the no of node");
+    int n=sc.nextInt();
+    for(int i=0;i<n;i++){
+        int val=sc.nextInt();
+        Node obj=new Node(val, null);
+        if(head==null){
+            head=obj;
+            prev=obj;
+        }
+        else{
+            prev.Address=obj;
+            prev=obj;
+        }
+    }
+}
+void DisplayData(){
+    Node temp=head;
+    while(temp!=null){
+        System.out.println(temp.Data);
+        temp=temp.Address;
+    }
+}
+void insertANode(){
+    Scanner sc=new Scanner(System.in);
+    System.out.println("enter the val");
+    int val=sc.nextInt();
+    System.out.println("enter the pos");
+    int pos=sc.nextInt();
+    Node newnode=new Node(val,null);
+    if(pos==1){
+        newnode.Address=head;
+        head=newnode;
+    }
+    else{
+        
+         Node temp=head;
+         for(int i=0;i<pos-2;i++){
+             temp=temp.Address;
+        
+         }
+         newnode.Address=temp.Address;
+         temp.Address=newnode;
+    }
+    
+}
+void deleteANode(){
+    Scanner sc=new Scanner(System.in);
+    System.out.println("enter the pos");
+    int pos=sc.nextInt();
+    Node temp=head;
+    if(pos==1){
+        head=temp.Address;
+    }else{
+      for(int i=0;i<pos-2;i++){
+        temp=temp.Address;
+    }
+    if(temp.Address.Address==null){
+        tail=temp;
+    }
+    temp.Address=temp.Address.Address;
+}
+}
+}
+public class Main
+{
+	public static void main(String[] args) {
+	    Scanner sc=new Scanner(System.in);
+	    Node node=new Node();
+	    while(true){
+	        System.out.println("1) CreateData \n2) DisplayData \n3) insertANode \n4)deleteANode");
+	        int ch=sc.nextInt();
+	        switch(ch){
+	            case 1:{
+	                node.CreateData();
+	                break;
+	            }
+	            case 2:{
+	                node.DisplayData();
+	                break;
+	            }
+	            case 3:{
+	                node.insertANode();
+	                break;
+	            }
+	            case 4:{
+	                node.deleteANode();
+	                break;
+	            }
+	        }
+	    }
+	}
+}
+
