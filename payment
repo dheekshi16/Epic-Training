@@ -1,0 +1,184 @@
+import java.util.*;
+abstract class Payment {
+    String CustomerName;
+    int TransactionID;
+    int Amount;
+
+    Payment(String CustomerName, int TransactionID, int Amount) {
+        this.CustomerName = CustomerName;
+        this.TransactionID = TransactionID;
+        this.Amount = Amount;
+    }
+
+    void displayPaymentDetails() {
+        System.out.println("Transaction ID : " + TransactionID);
+        System.out.println("Customer Name  : " + CustomerName);
+        System.out.println("Base Amount    : ₹" + Amount);
+    }
+
+    abstract boolean Validatepayment();
+    abstract void Processpayment();
+    abstract double transactionfee();
+    abstract double cashback();
+    double finalamount() {
+        return Amount + transactionfee() - cashback();
+    }
+}
+
+class CreditCardPayment extends Payment {
+    String CardNo;
+    CreditCardPayment(String CustomerName, int TransactionID,
+                      int Amount, String CardNo) {
+
+        super(CustomerName, TransactionID, Amount);
+        this.CardNo = CardNo;
+    }
+    boolean Validatepayment() {
+        if (CardNo != null && CardNo.length() == 16) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    void Processpayment() {
+        System.out.println("Transaction Processed through Credit Card Payment");
+        if (Validatepayment()) {
+            displayPaymentDetails();
+            System.out.println("Transaction Fee: " + transactionfee());
+            System.out.println("Cashback: " + cashback());
+            System.out.println("Final Amount: " + finalamount());
+            System.out.println();
+        } else {
+            System.out.println("Enter correct card number");
+        }
+    }
+    double transactionfee() {
+        return Amount * 0.02;
+    }
+    double cashback() {
+        return Amount * 0.05;
+    }
+}
+
+class UPIPayment extends Payment {
+    String UPIid;
+    UPIPayment(String CustomerName, int TransactionID,
+               int Amount, String UPIid) {
+        super(CustomerName, TransactionID, Amount);
+        this.UPIid = UPIid;
+    }
+    boolean Validatepayment() {
+        if (UPIid != null && UPIid.contains("@")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    void Processpayment() {
+        System.out.println("Transaction Processed through UPI Payment");
+        if (Validatepayment()) {
+            displayPaymentDetails();
+            System.out.println("Transaction Fee: " + transactionfee());
+            System.out.println("Cashback: " + cashback());
+            System.out.println("Final Amount: " + finalamount());
+            System.out.println();
+        } else {
+            System.out.println("Enter correct UPI ID");
+        }
+    }
+    double transactionfee() {
+        return Amount * 0.005;
+    }
+    double cashback() {
+        return Amount * 0.02;
+    }
+}
+
+class NetBankingPayment extends Payment {
+    String AccNo;
+    NetBankingPayment(String CustomerName, int TransactionID,
+                      int Amount, String AccNo) {
+        super(CustomerName, TransactionID, Amount);
+        this.AccNo = AccNo;
+    }
+    boolean Validatepayment() {
+        if (AccNo != null && AccNo.length() == 12) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    void Processpayment() {
+        System.out.println("Transaction Processed through Net Banking Payment");
+        if (Validatepayment()) {
+            displayPaymentDetails();
+            System.out.println("Transaction Fee: " + transactionfee());
+            System.out.println("Cashback: " + cashback());
+            System.out.println("Final Amount: " + finalamount());
+            System.out.println();
+        } else {
+            System.out.println("Enter correct Account Number");
+        }
+    }
+    double transactionfee() {
+        return Amount * 0.01;
+    }
+    double cashback() {
+        return Amount * 0.01;
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        Payment[] pay = new Payment[100];
+        int index = 0;
+        while (index < pay.length) {
+            System.out.println("Enter Customer Name:");
+            String name = in.nextLine();
+            System.out.println("Enter Transaction ID:");
+            int id = in.nextInt();
+            System.out.println("Enter Amount:");
+            int amount = in.nextInt();
+            System.out.println( "\n1) Credit Card Payment \n2) UPI Payment \n3) Net Banking Payment \n4)Exit");
+            int choice = in.nextInt();
+            in.nextLine();   
+            switch (choice) {
+                case 1: {
+                    System.out.println("Enter Card No:");
+                    String CardNo = in.nextLine();
+                    CreditCardPayment c = new CreditCardPayment( name, id, amount, CardNo);
+                    pay[index] = c;
+                    pay[index].Processpayment();
+                    index++;
+                    break;
+                }
+                case 2: {
+                    System.out.println("Enter UPI ID:");
+                    String uid = in.nextLine();
+                    UPIPayment u = new UPIPayment( name, id, amount, uid);
+                    pay[index] = u;
+                    pay[index].Processpayment();
+                    index++;
+                    break;
+                }
+                case 3: {
+                    System.out.println("Enter Account No:");
+                    String AccNo = in.nextLine();
+                    NetBankingPayment n = new NetBankingPayment( name, id, amount, AccNo);
+                    pay[index] = n;
+                    pay[index].Processpayment();
+                    index++;
+                    break;
+                }
+                case 4: {
+                    System.out.println("Thank you");
+                    break;
+                }
+                default:
+                    System.out.println("Invalid Choice");
+            }
+        }
+    }
+}
