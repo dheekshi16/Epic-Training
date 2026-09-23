@@ -1,0 +1,37 @@
+import java.util.*;
+class ClassA {
+    int a = 10;
+    void display(int a ,int b){
+        System.out.println("ClassA");
+    }
+}
+class ClassB extends ClassA{
+    int b = 20;
+    void display(int a){
+        System.out.println("ClassB");
+    }
+}
+class ClassC extends ClassB{
+    int c = 30;
+    void display(int a , int b ,int c){
+        System.out.println("ClassC");
+    }
+}
+public class Main
+{
+	public static void main(String[] args) {
+	    System.out.println("Object of class B");
+	    ClassB bobj = new ClassB();
+	    bobj.display(10,20);
+		System.out.println("class B: "+bobj.b);
+		System.out.println();
+		System.out.println("Object of Class C ");
+		ClassC cobj = new ClassC();
+		System.out.println("Class A: "+cobj.a);
+		cobj.display(10);
+		cobj.display(10,20,30);
+		
+		
+		
+	}
+}
